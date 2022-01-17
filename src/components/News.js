@@ -34,9 +34,12 @@ export default class News extends Component {
         
         async updateNews() {
             console.log(this.state.page);
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=eea62f0fdc704f66b890de73b0acfa28&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+            this.props.setProgress(10);
+            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=0609ed389c9b49518c0fe7b3ca342f37&page=${this.state.page}&pageSize=${this.props.pageSize}`;
             this.setState({loading: true})
+            this.props.setProgress(30);
             let data = await fetch(url);
+            this.props.setProgress(50);
             let parsedData = await data.json();
             console.log(parsedData)
             this.setState({
@@ -44,6 +47,8 @@ export default class News extends Component {
                  totalResults: parsedData.totalResults,
                  loading: false
                 })
+            this.props.setProgress(100);
+            
         }
         async componentDidMount() {
             this.updateNews();
@@ -89,7 +94,7 @@ export default class News extends Component {
         fetchMoreData = async () => {
             console.log(this.state.page);
             this.setState({page: this.state.page+1});
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=eea62f0fdc704f66b890de73b0acfa28&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=0609ed389c9b49518c0fe7b3ca342f37&page=${this.state.page}&pageSize=${this.props.pageSize}`;
             let data = await fetch(url);
             let parsedData = await data.json();
             console.log(parsedData)
@@ -109,7 +114,7 @@ export default class News extends Component {
                 <InfiniteScroll
                     dataLength={this.state.articles.length}
                     next={this.fetchMoreData}
-                    hasMore={this.state.articles.length != this.state.totalResults}
+                    hasMore={this.state.articles.length !== this.state.totalResults}
                     loader={<Spinner/>}
                 >
                 <div className="container my-3">

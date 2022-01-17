@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 
 export default class App extends Component  {
-
+  
   state = {
     progress:0
   }
@@ -30,7 +30,6 @@ export default class App extends Component  {
         height={2}
         color='#f11946'
         progress={this.state.progress}
-        // onLoaderFinished={() => setProgress(0)}
       />
         <Routes>
           <Route exact path="/about"/>
